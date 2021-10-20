@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from django.db.models import Sum
 from django.utils import timezone
@@ -30,4 +30,3 @@ class HelloWorld(APIView):
             'all_visits': all_visits,
         }
         return Response(data)
-

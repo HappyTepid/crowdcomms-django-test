@@ -1,5 +1,5 @@
-from .models import UserVisit
 from django.utils import timezone
+from .models import UserVisit
 
 class UserVisitMiddleware:
 

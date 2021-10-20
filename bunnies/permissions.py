@@ -12,4 +12,3 @@ class RabbitHolePermissions(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return super().has_object_permission(request, view, obj)
         return request.user == obj.owner or request.user.is_superuser
-
