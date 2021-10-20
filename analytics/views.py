@@ -16,10 +16,9 @@ class HelloWorld(APIView):
     """
 
     def get(self, request, format=None):
-        now = timezone.now()
-
         all_visitors = UserVisit.objects.count()
-        recent_visitors = UserVisit.objects.filter(last_seen__gte=now-timedelta(hours=1)).count()
+        recent_visitors = UserVisit.objects.filter(
+            last_seen__gte=timezone.now() - timedelta(hours=1)).count()
         all_visits = UserVisit.objects.aggregate(Sum('visits'))['visits__sum']
 
         data = {
