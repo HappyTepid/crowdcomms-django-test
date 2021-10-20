@@ -1,9 +1,7 @@
 from django.contrib.auth.models import User
-from django.test import TestCase
 
 # Create your tests here.
 from django.urls import reverse
-from rest_framework.exceptions import PermissionDenied
 from rest_framework.test import APITestCase
 
 from bunnies.models import RabbitHole, Bunny
@@ -23,7 +21,10 @@ class RabbitHolesTests(APITestCase):
         '''
 
         assert self.client.get(self.url).status_code == 403
-        User.objects.create_user(username='admin', email='rabbitoverlord@test.com', password='rabbits')
+        User.objects.create_user(
+            username='admin',
+            email='rabbitoverlord@test.com',
+            password='rabbits')
         self.client.login(username='admin', password='rabbits')
         assert self.client.get(self.url).status_code == 200
 
@@ -111,15 +112,12 @@ class RabbitHolesTests(APITestCase):
         rabbit_hole = RabbitHole.objects.create(owner=user, location='location', bunnies_limit=3)
         for name in ['Flopsy', 'Mopsy', 'CottonTail']:
             Bunny.objects.create(name=name, home=rabbit_hole)
-        url = reverse(
-            'bunny-list'
-        )
         self.client.login(username='user', password='rabbits')
         data = {
             'name': 'Harry',
             'home': rabbit_hole.location
         }
-        response = self.client.post(f'/bunnies/', data=data)
+        response = self.client.post('/bunnies/', data=data)
         self.assertEqual(response.status_code, 400)
 
     def test_family_members(self):

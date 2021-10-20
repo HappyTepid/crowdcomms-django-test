@@ -15,7 +15,7 @@ class RabbitHole(models.Model):
 
 class Bunny(models.Model):
     '''
-
+    A gregarious burrowing plant-eating mammal, with long ears, long hind legs, and a short tail.
     '''
     name = models.CharField(max_length=64)
     home = models.ForeignKey(RabbitHole, on_delete=models.CASCADE, related_name='bunnies')

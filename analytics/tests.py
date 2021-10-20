@@ -1,3 +1,4 @@
+import datetime
 from unittest import mock
 from django.utils import timezone
 
@@ -5,7 +6,6 @@ from django.contrib.auth.models import User
 
 # Create your tests here.
 from rest_framework.test import APITestCase
-import datetime
 import pytz
 
 from analytics.models import UserVisit
@@ -92,7 +92,3 @@ class UserVisitLoggingTests(APITestCase):
         self.assertEqual(response.data.get('recent_visitors'), 6)
         self.assertEqual(response.data.get('all_visitors'), 7)
         self.assertEqual(response.data.get('all_visits'), 17)
-
-
-
-

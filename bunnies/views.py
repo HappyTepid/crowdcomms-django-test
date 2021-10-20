@@ -16,8 +16,13 @@ class RabbitHoleViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
     def filter_queryset(self, queryset):
-        return queryset
+        if self.request.user.is_superuser:
+            return queryset
+        return queryset.filter(owner=self.request.user)
 
 
 class BunnyViewSet(viewsets.ModelViewSet):
