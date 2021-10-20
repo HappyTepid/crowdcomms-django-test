@@ -26,6 +26,10 @@ class BunnySerializer(serializers.ModelSerializer):
         return [bunny.name for bunny in bunnies]
 
     def validate(self, attrs):
+        rabbit_hole = attrs['home']
+        current_bunnies = rabbit_hole.bunnies.count()
+        if current_bunnies >= rabbit_hole.bunnies_limit:
+            raise serializers.ValidationError("Maximum number of bunnies exceeded")
         return attrs
 
     class Meta:
