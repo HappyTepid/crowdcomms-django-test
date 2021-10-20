@@ -22,8 +22,8 @@ class BunnySerializer(serializers.ModelSerializer):
     family_members = serializers.SerializerMethodField()
 
     def get_family_members(self, obj):
-        bunnies = Bunny.objects.filter(home=obj.home.id).exclude(pk=obj.pk)
-        return [bunny.name for bunny in bunnies]
+        bunny_names = Bunny.objects.filter(home=obj.home.id).exclude(pk=obj.pk).values_list('name', flat=True)
+        return bunny_names
 
     def validate(self, attrs):
         rabbit_hole = attrs['home']
